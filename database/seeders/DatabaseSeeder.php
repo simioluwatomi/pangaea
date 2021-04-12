@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Subscriber;
+use App\Models\Topic;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call('UsersTableSeeder');
+        Topic::factory()
+            ->has(
+                Subscriber::factory()->count(rand(10, 15)),
+                'subscribers'
+            )
+            ->count(rand(15, 20))
+            ->create();
     }
 }
