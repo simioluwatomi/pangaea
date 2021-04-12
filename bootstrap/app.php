@@ -23,6 +23,10 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
+$app->configure('tinker');
+
+$app->register(\Laravel\Tinker\TinkerServiceProvider::class);
+
 $app->withFacades();
 
 $app->withEloquent();
@@ -106,9 +110,7 @@ $app->configure('app');
 |
 */
 
-$app->router->group([
-    'namespace' => 'App\Http\Controllers',
-], function ($router) {
+$app->router->group(['namespace' => 'App\Http\Controllers'], function ($router) {
     require __DIR__.'/../routes/web.php';
 });
 
