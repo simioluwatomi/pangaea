@@ -25,8 +25,6 @@ $app = new Laravel\Lumen\Application(
 
 $app->configure('tinker');
 
-$app->register(\Laravel\Tinker\TinkerServiceProvider::class);
-
 $app->withFacades();
 
 $app->withEloquent();
@@ -98,6 +96,10 @@ $app->configure('app');
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+
+$app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
+
+$app->register(\Laravel\Tinker\TinkerServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
