@@ -13,6 +13,12 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+$router->post('/subscribe/{topic}', [
+    'as' => 'subscriber.create',
+    'uses' => 'SubscriberController@store'
+]);
+
+$router->post('/publish/{topic}', [
+    'as' => 'topic.publish',
+    'uses' => 'TopicController@publish'
+]);
