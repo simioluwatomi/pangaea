@@ -2,25 +2,23 @@
 
 namespace App\Exceptions;
 
+use App\Traits\ExceptionHandlerTrait;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    use ExceptionHandlerTrait;
+
     /**
      * A list of the exception types that should not be reported.
      *
      * @var array
      */
     protected $dontReport = [
-        AuthorizationException::class,
-        HttpException::class,
-        ModelNotFoundException::class,
-        ValidationException::class,
     ];
 
     /**
@@ -49,6 +47,18 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof ModelNotFoundException) {
+            return $this->modelNotFound($exception);
+        }
+
+        if ($exception instanceof NotFoundHttpException) {
+            return $this->routeNotFound();
+        }
+
+        if ($exception instanceof AuthorizationException) {
+            return $this->authorizationError($exception);
+        }
+
         return parent::render($request, $exception);
     }
 }
