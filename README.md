@@ -1,24 +1,32 @@
-# Lumen PHP Framework
+# Pangaea Take Home Assignment
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
+For this challenge we'll be creating an HTTP notification system. A server (or set of servers) will keep track of topics and its
+subscribers where a topic is a string, and a subscriber is an HTTP endpoint. When a message is published on a topic, it
+should be forwarded to all subscriber endpoints.
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+Here's an image of a what we are trying to build:
 
-## Official Documentation
+![PubSub System](storage/app/system.png)
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+## About Project
 
-## Contributing
+This project is built on [Lumen](https://lumen.laravel.com/) and utilizes some libraries and packages which can be found in the `composer.json` file.
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Setup
 
-## Security Vulnerabilities
+To set up the project,
+-   Clone the repository from source control.
+-   Navigate to the cloned repo on your computer using the CLI and do the following
+    -   Install composer packages using `composer install`.
+    -   Copy example env file to env `cp .env.example .env`.
+    -   Generate application key using `php artisan key:generate`.
+    -   Create a database in MySQL and enter its credentials in the `.env` file.
+    -   Migrate and seed the database using `php artisan migrate:refresh --seed`. This will create sample topics and subscribers.
+    -   Start Php's inbuilt server using `php artisan serve`.
+    
+## Endpoints
+- POST `/subscribe/{topic}`. This route creates a subscriber for a topic. The `{topic}` route parameter should be the slug of any topic seeded into the database.
+- POST `/publish/{topic}`. This route sends an HTTP request to all subscribers of a topic. The `{topic}` route parameter should be the slug of any topic seeded into the database. ***Please note that the HTTP request would not be sent if the topic does not have subscribers.***
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Tests
+- Run application tests using `vendor/bin/phpunit`.
