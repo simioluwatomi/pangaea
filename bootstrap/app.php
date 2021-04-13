@@ -25,6 +25,8 @@ $app = new Laravel\Lumen\Application(
 
 $app->configure('tinker');
 
+$app->configure('sluggable');
+
 $app->withFacades();
 
 $app->withEloquent();
